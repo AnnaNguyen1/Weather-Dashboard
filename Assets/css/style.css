@@ -1,0 +1,11 @@
+:root {
+    --poppins: 'Poppins', sans-serif;
+}
+
+.poppins {
+    font-family: var(--poppins);
+}
+
+.gradient {
+    background-image: linear-gradient(to right, rgb(233, 106, 233) , rgb(6, 6, 194));
+}
