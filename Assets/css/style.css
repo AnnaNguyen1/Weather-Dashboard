@@ -2,10 +2,23 @@
     --poppins: 'Poppins', sans-serif;
 }
 
-.poppins {
+
+.poppins,
+#error {
     font-family: var(--poppins);
 }
 
 .gradient {
     background-image: linear-gradient(to right, rgb(233, 106, 233) , rgb(6, 6, 194));
+}
+
+#error {
+    font-size: 12px;
+    color: rgb(109, 6, 6);
+    font-weight: bold;
+    display: none;
+}
+
+.error-box {
+    box-shadow: .2rem .2rem .5rem rgb(109, 6, 6);
 }
