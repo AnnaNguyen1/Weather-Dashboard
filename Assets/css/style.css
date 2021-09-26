@@ -22,3 +22,19 @@
 .error-box {
     box-shadow: .2rem .2rem .5rem rgb(109, 6, 6);
 }
+
+.low {
+    background-color: rgb(93, 243, 93);
+    padding: 5px;
+}
+
+.moderate {
+    background-color: yellow;
+    padding: 5px;
+}
+
+.high {
+    background-color: red;
+    color: white;
+    padding: 5px;
+}
