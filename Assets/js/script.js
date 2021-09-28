@@ -169,13 +169,13 @@ function storeCity(city) {
     var searchCity = city.name;
         // console.log(city);
         
-    var cityStorage = localStorage.setItem('Cities', searchCity);
+    var cityStorage = localStorage.setItem('Cities', JSON.stringify(searchCity));
     if(cityStorage === null) {
         cityStorage = [];
     }
         
     var displaySearch = document.createElement('button');
-    displaySearch.setAttribute('class', 'btn btn-outline-secondary');
+    displaySearch.setAttribute('class', 'btn btn-outline-secondary col-12 mt-4');
     displaySearch.setAttribute('type', 'submit');
     displaySearch.setAttribute('data-city', searchCity);
     displaySearch.textContent = searchCity;
@@ -187,8 +187,11 @@ function storeCity(city) {
 function displayCity(event) {
     pastSearches.textContent = '';
 
-    var getSearches
+    var getSearches = event.target.getAttribute('data-city');
+    if (getSearches) {
+        getWeatherData(city);
+    };
 }
 
-
 searchForm.addEventListener('submit', handleSearchFormSubmit);
+var showPreviousCitySearch = JSON.parse(localStorage.getItem('Cities'));
