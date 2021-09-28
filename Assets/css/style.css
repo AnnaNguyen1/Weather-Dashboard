@@ -38,3 +38,7 @@
     color: white;
     padding: 5px;
 }
+
+#forecast-temp-container {
+    padding-top: 40px;
+}

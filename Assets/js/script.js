@@ -3,6 +3,9 @@ var searchInput = document.querySelector('#search-input');
 var errorMessage = document.querySelector('#error');
 var currentTemp = document.querySelector('#current-temp-container');
 var forecastContainer = document.querySelector('#forecast-temp-container');
+var pastSearches = document.querySelector('#past-search');
+
+
 
 function handleSearchFormSubmit(event) {
     event.preventDefault();
@@ -31,6 +34,7 @@ function getWeatherData(city) {
             if (response.ok) {
                 response.json().then(function (data) {
                     displayWeather(data);
+                    storeCity(data);
                 });
             } else {
                 currentTemp.textContent = '';
@@ -51,7 +55,6 @@ function displayWeather(weather) {
     console.log(weather);
     currentTemp.textContent = '';
     var day = moment(weather.dt.value).format('DD-MM-YYYY');
-    console.log(weather.weather.icon);
     
 
     var cityName = document.createElement('h3');
@@ -84,6 +87,7 @@ function displayWeather(weather) {
     getUvIndex(lat,lon);
     
 };
+
 
 function getUvIndex(lat,lon) {
     console.log(lat, lon);
@@ -123,6 +127,12 @@ function displayUvIndex(weather) {
 
 function displayForecast(forecast) {
     forecastContainer.textContent = '';
+    
+    var titleForecast = document.createElement('h3');
+    titleForecast.setAttribute('class', 'poppins');
+    titleForecast.textContent = '5 Day Forecast';
+    forecastContainer.appendChild(titleForecast);
+
     for (i=1; i < 6; i++) {
         var forecastDay = document.createElement('div');
         forecastDay.setAttribute('class', 'col-2 mt-3')
@@ -131,6 +141,7 @@ function displayForecast(forecast) {
         var date = moment.unix(forecastContent.dt).format('DD/MM/YYYY');
         // console.log(date);
         var forecastDate = document.createElement('h4');
+        forecastDate.setAttribute('class', 'poppins');
         forecastDate.textContent = date + " ";
         forecastDay.appendChild(forecastDate);
 
@@ -153,6 +164,31 @@ function displayForecast(forecast) {
         forecastContainer.appendChild(forecastDay);
     }
 };
+
+function storeCity(city) {
+    var searchCity = city.name;
+        // console.log(city);
+        
+    var cityStorage = localStorage.setItem('Cities', searchCity);
+    if(cityStorage === null) {
+        cityStorage = [];
+    }
+        
+    var displaySearch = document.createElement('button');
+    displaySearch.setAttribute('class', 'btn btn-outline-secondary');
+    displaySearch.setAttribute('type', 'submit');
+    displaySearch.setAttribute('data-city', searchCity);
+    displaySearch.textContent = searchCity;
+    console.log(displaySearch);
+    pastSearches.prepend(displaySearch); //append on top
+    
+};
+
+function displayCity(event) {
+    pastSearches.textContent = '';
+
+    var getSearches
+}
 
 
 searchForm.addEventListener('submit', handleSearchFormSubmit);
