@@ -52,7 +52,6 @@ function getWeatherData(city) {
 };
 
 function displayWeather(weather) {
-    console.log(weather);
     currentTemp.textContent = '';
     var day = moment(weather.dt.value).format('DD-MM-YYYY');
     
@@ -68,17 +67,14 @@ function displayWeather(weather) {
 
     var currTemp = document.createElement('p');
     currTemp.textContent = 'Temperature: ' + weather.main.temp + '\u00B0C';
-    console.log(currTemp);
     currentTemp.appendChild(currTemp);
 
     var currWind = document.createElement('p');
     currWind.textContent = 'Wind: ' + weather.wind.speed + " m/sec";
-    console.log(currWind);
     currentTemp.appendChild(currWind);
 
     var currHumid = document.createElement('p');
     currHumid.textContent = 'Humidity: ' + weather.main.humidity + "%";
-    console.log(currHumid);
     currentTemp.appendChild(currHumid);
 
     var lat = weather.coord.lat;
@@ -90,9 +86,7 @@ function displayWeather(weather) {
 
 
 function getUvIndex(lat,lon) {
-    console.log(lat, lon);
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly&appid=b4bd9de6b2c738f8f298aed24a79827e&units=metric";
-    console.log(apiUrl);
 
     fetch(apiUrl)
         .then(function (response) {
@@ -167,12 +161,17 @@ function displayForecast(forecast) {
 
 function storeCity(city) {
     var searchCity = city.name;
-        console.log(typeof searchCity);
+        // console.log("type of searchcity", typeof searchCity);
     
 
     var cityStorage = localStorage.getItem('Cities');
     if (cityStorage === null) {
         cityStorage = [];
+
+        // indexOf to search for a value in an array that already exists. -1 is the index which doesn't exist
+        // this is to ensure that the same city is not saved multiple times 
+    } else if (cityStorage.indexOf(searchCity) != -1) {
+        return;
     } else {
         cityStorage = JSON.parse(cityStorage);
     }
@@ -181,8 +180,7 @@ function storeCity(city) {
     var newCity = JSON.stringify(cityStorage);
     localStorage.setItem('Cities', newCity);
 
-    var nameCity = JSON.parse(localStorage.getItem('Cities'));
-
+    // var nameCity = JSON.parse(localStorage.getItem('Cities'));
 
     var displaySearch = document.createElement('button');
     displaySearch.setAttribute('class', 'btn btn-outline-secondary col-12 mt-4');
@@ -194,6 +192,7 @@ function storeCity(city) {
     
 };
 
+// Load the cities already saved in storage
 function loadStorage() {
     var displayExistingSearches = JSON.parse(localStorage.getItem('Cities'));
     if (displayExistingSearches != null) {
